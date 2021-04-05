@@ -4,11 +4,15 @@
 </template>
 
 <script>
+import Vue from "vue";
+import * as L from "leaflet";
 import 'leaflet-draw'
 import 'leaflet-toolbar'
 import ColorPicker from './ColorPicker';
 import Draw from './draw';
 import Edit from './edit';
+
+Vue.use(L)
 
 export default {
   name: 'l-draw-toolbar',
@@ -21,42 +25,42 @@ export default {
 
   mounted() {
     this.$nextTick(() => {
-      const map = this.$parent.$parent.$refs.map.mapObject;
+      // const map = this.$parent.$parent.$refs.map.mapObject;
 
-      let editActions = [
-        L.Toolbar2.EditAction.Popup.Edit,
-        L.Toolbar2.EditAction.Popup.Delete,
-        L.Toolbar2.Action.extendOptions({
-          toolbarIcon: { 
-            className: 'leaflet-color-picker', 
-            html: '<i class="fas fa-fill-drip"></i>' 
-          },
-          subToolbar: new L.Toolbar2({ actions: [
-            L.ColorPicker.extendOptions({ color: '#db1d0f' }),
-            L.ColorPicker.extendOptions({ color: '#025100' }),
-            L.ColorPicker.extendOptions({ color: '#ffff00' }),
-            L.ColorPicker.extendOptions({ color: '#0000ff' })
-          ]})
-        })
-      ];
+      // let editActions = [
+      //   L.Toolbar2.EditAction.Popup.Edit,
+      //   L.Toolbar2.EditAction.Popup.Delete,
+      //   L.Toolbar2.Action.extendOptions({
+      //     toolbarIcon: { 
+      //       className: 'leaflet-color-picker', 
+      //       html: '<i class="fas fa-fill-drip"></i>' 
+      //     },
+      //     subToolbar: new L.Toolbar2({ actions: [
+      //       L.ColorPicker.extendOptions({ color: '#db1d0f' }),
+      //       L.ColorPicker.extendOptions({ color: '#025100' }),
+      //       L.ColorPicker.extendOptions({ color: '#ffff00' }),
+      //       L.ColorPicker.extendOptions({ color: '#0000ff' })
+      //     ]})
+      //   })
+      // ];
 
-      new L.Toolbar2.DrawToolbar({
-          position: this.position
-      }).addTo(map);
+      // new L.Toolbar2.DrawToolbar({
+      //     position: this.position
+      // }).addTo(map);
 
-      map.on('draw:created', function (e) {
-        var type = e.layerType,
-            layer = e.layer;
+      // map.on('draw:created', function (e) {
+      //   var type = e.layerType,
+      //       layer = e.layer;
 
-        layer.on('click', function(event) {
-          this.editMode = true
-          new L.Toolbar2.EditToolbar.Popup(event.latlng, {
-            actions: editActions
-          }).addTo(map, layer);
-        });
+      //   layer.on('click', function(event) {
+      //     this.editMode = true
+      //     new L.Toolbar2.EditToolbar.Popup(event.latlng, {
+      //       actions: editActions
+      //     }).addTo(map, layer);
+      //   });
         
-        layer.addTo(map);
-      });
+      //   layer.addTo(map);
+      // });
     })
   },
 
